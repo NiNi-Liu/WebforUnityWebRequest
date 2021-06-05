@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>  
+    <p id="dataDisplay"></p>
+    <p id="dataDisplay2"></p>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+    <script src="./js/init-firebase.js"></script>
+    <script>
+        let database = firebase.database();
+        function getData(){     
+            database.ref("/").on('value',function(snapshot){
+                console.log(snapshot.val());
+                document.getElementById("dataDisplay").innerHTML = ``;
+                snapshot.forEach(function(childSnapshot){
+                    let childKey = childSnapshot.key;
+                    let childVal = childSnapshot.val();
+                    document.getElementById("dataDisplay").innerHTML += `key:${childKey} val:${childVal}<br>`
+                });
+            })
+        }
+        // database.ref("/").set({'kenny':50});
+        console.log('start');
+        getData();
+        document.getElementById("dataDisplay2").innerHTML = 50;
+    </script>
+</body>
+</html>
